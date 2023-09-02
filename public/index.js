@@ -52,7 +52,7 @@ async function loadModel() {
   };
 
   session = await ort.InferenceSession.create(
-    "./resnet50-v1-7.onnx",
+    "./model.onnx",
     sessionOptions
   );
 
