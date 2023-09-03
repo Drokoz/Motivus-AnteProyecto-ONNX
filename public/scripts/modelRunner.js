@@ -37,12 +37,16 @@ async function runBatchModel(
   modelName
 ) {
   if (urlArray.length === 0) {
+    console.log("Obteniendo arreglo");
     urlArray = await fetch("http://localhost:3001/urlArray");
   }
+  console.log("Arreglo obtenido: ", urlArray);
   let times = {};
   var startTime = performance.now();
   var timeImageArray = performance.now();
   var imageArray = imagesArray;
+
+  console.log("Obteniendo imagenes");
   if (imagesArray.length === 0) {
     imageArray = await getImagesArray(urlArray);
   }
@@ -51,6 +55,7 @@ async function runBatchModel(
   console.log("Tiempo procesado en fetch de imágenes: ", FTimeImageArray);
   //console.log(imageArray);
 
+  console.log("Obteniendo tensor");
   var timeTensor = performance.now();
   const tensorImages = await getTensorFromBatch(
     imageSize,
