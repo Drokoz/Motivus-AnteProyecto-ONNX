@@ -37,7 +37,7 @@ async function runBatchModel(
   modelName
 ) {
   if (urlArray.length === 0) {
-    urlArray = arrayURLs;
+    urlArray = await fetch("http://localhost:3001/urlArray");
   }
   let times = {};
   var startTime = performance.now();

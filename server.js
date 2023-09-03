@@ -78,6 +78,27 @@ app.get("/images", function (req, res) {
   res.send(imagesList);
 });
 
+app.post("/urlArray", function (req, res) {
+  const { urls } = req.body;
+
+  if (!urls || !Array.isArray(urls)) {
+    return res.status(400).json({ error: 'Invalid JSON data' });
+  }
+
+  // Now, "urls" contains the array of URLs from the JSON file
+  console.log('Received URLs:', urls);
+  global.urlsArray = urls;
+
+});
+
+app.get("/urlArray", function (req, res) {
+  if (!global.urlsArray.length) {
+    return res.status(404).json({ error: 'No URLs stored yet.' });
+  }
+  res.send(global.urlsArray);
+});
+  
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
