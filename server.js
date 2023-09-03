@@ -88,7 +88,7 @@ app.post("/urlArray", function (req, res) {
   // Now, "urls" contains the array of URLs from the JSON file
   console.log('Received URLs:', urls);
   global.urlsArray = urls;
-
+  return res.status(200).json({ OK: 'file recieved' });
 });
 
 app.get("/urlArray", function (req, res) {
