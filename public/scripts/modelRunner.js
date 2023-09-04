@@ -42,11 +42,7 @@ async function runBatchModel(
     console.log(response);
     var response_fullfiled = await response.json();
     console.log(response_fullfiled);
-    urlArray = urlArray.concat(["https://i.imgur.com/b0rgmfl.jpg",
-    "https://i.imgur.com/T0wfmza.jpg",
-    "https://i.imgur.com/pX4HIwE.jpg",
-    "https://i.imgur.com/Mh0CzBL.jpg",
-    "https://i.imgur.com/ShJfWWk.jpg"]);
+    urlArray = urlArray.concat(response_fullfiled);
   }
   console.log("Arreglo obtenido: ");
   console.log(JSON.stringify(urlArray));
@@ -84,7 +80,7 @@ async function runBatchModel(
   var finishTime = performance.now() - startTime;
   times["total"] = finishTime;
   console.log("Tiempo procesado total: ", finishTime);
-  //postJSON(result, "http://localhost:3001/data");
+  postJSON(result, "http://localhost:3001/data");
   return times;
 }
 
