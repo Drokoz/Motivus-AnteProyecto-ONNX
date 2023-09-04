@@ -38,7 +38,7 @@ async function runBatchModel(
 ) {
   if (urlArray.length === 0) {
     console.log("Obteniendo arreglo");
-    var response = (await fetch("http://localhost:3001/urlArray")).json();
+    var response = await fetch("http://localhost:3001/urlArray");
     console.log(response);
     var response_fullfiled = await response.json();
     console.log(response_fullfiled);
