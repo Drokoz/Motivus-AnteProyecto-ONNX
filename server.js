@@ -73,15 +73,18 @@ app.post("/urlArray", (req, res) => {
   if (!urls || !Array.isArray(urls)) {
     return res.status(400).json({ error: 'Invalid JSON data' });
   }
-  console.log('Received URLs:', urls);
+  
   global.urlsArray = urls;
+  console.log('Received URLs:', global.urlsArray);
   return res.status(200).json({ OK: 'file received' });
 });
 
 app.get("/urlArray", (req, res) => {
+  console.log("Asking for urlArray");
   if (!global.urlsArray || !global.urlsArray.length) {
     return res.status(404).json({ error: 'No URLs stored yet.' });
   }
+  console.log("Sending",JSON.stringify(global.urlsArray));
   res.send(global.urlsArray);
 });
 
