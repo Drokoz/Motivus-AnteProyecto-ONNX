@@ -41,9 +41,7 @@ async function runBatchModel(
     urlArray = await fetch("http://localhost:3001/urlArray");
   }
   console.log("Arreglo obtenido: ");
-  urlArray.forEach(element => {
-    console.log(element);
-  });
+  console.log(JSON.stringify(urlArray));
   let times = {};
   var startTime = performance.now();
   var timeImageArray = performance.now();
