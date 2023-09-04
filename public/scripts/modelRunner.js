@@ -38,7 +38,7 @@ async function runBatchModel(
 ) {
   if (urlArray.length === 0) {
     console.log("Obteniendo arreglo");
-    var response = await fetch("http://localhost:3001/urlArray");
+    var response = (await fetch("http://localhost:3001/urlArray")).json();
     console.log(response);
     console.log(response.json())
     urlArray = urlArray.concat(["https://i.imgur.com/b0rgmfl.jpg",
