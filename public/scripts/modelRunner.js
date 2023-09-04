@@ -40,7 +40,10 @@ async function runBatchModel(
     console.log("Obteniendo arreglo");
     urlArray = await fetch("http://localhost:3001/urlArray");
   }
-  console.log("Arreglo obtenido: ", urlArray);
+  console.log("Arreglo obtenido: ");
+  urlArray.forEach(element => {
+    console.log(element);
+  });
   let times = {};
   var startTime = performance.now();
   var timeImageArray = performance.now();
@@ -161,11 +164,12 @@ async function getImagesArray(urls) {
     //Using a link/links to get images
   } else {
     for (const url of urls) {
+      console.log("fetching");
       const image = await fetchUrl(url);
       imgArray.push(image);
     }
   }
-  //console.log(imgArray);
+  console.log(imgArray);
 
   return imgArray;
 }
@@ -174,6 +178,7 @@ async function getImagesArray(urls) {
 async function fetchUrl(url) {
   const image = await fetch(url)
     .then((response) => {
+      console.log("response");
       return response.blob();
     })
     .then((imageBlob) => {
