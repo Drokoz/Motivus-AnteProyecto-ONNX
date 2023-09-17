@@ -16,7 +16,7 @@ async function runModel() {
   console.log("Entering mode: ", modeName);
   switch (modeName) {
     case "benchmark":
-      console.log("Running batch mode");
+      console.log("Running bench mode");
       result = await runBenchmark(
         imageSize,
         arrayExpected,
