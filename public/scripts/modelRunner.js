@@ -104,7 +104,7 @@ async function runBenchmark(
   var response_fullfiled = await response.json();
   console.log(response_fullfiled);
   urlArray = urlArray.concat(response_fullfiled);
-  const imagesArray = await getImagesArray(urlsArray);
+  const imagesArray = await getImagesArray(urlArray);
   //console.log(imagesArray.length);
   //console.log(imagesArray);
   //Start the repetitions
