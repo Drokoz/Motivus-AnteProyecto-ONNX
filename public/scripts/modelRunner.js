@@ -169,7 +169,6 @@ async function getImagesArray(urls) {
     //Using a link/links to get images
   } else {
     for (const url of urls) {
-      console.log("fetching");
       const image = await fetchUrl(url);
       imgArray.push(image);
     }
@@ -183,7 +182,6 @@ async function getImagesArray(urls) {
 async function fetchUrl(url) {
   const image = await fetch(url)
     .then((response) => {
-      console.log("response");
       return response.blob();
     })
     .then((imageBlob) => {
