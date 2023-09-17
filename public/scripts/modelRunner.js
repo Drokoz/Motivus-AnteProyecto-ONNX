@@ -98,15 +98,13 @@ async function runBenchmark(
   //Create arrays than will have the json
   var timesJson = [];
   var timesJsonAvg = [];
-  console.log("Obteniendo arreglo");
+  console.log("Obteniendo arreglo benchmark");
   var response = await fetch("http://localhost:3001/urlArray");
-  console.log(response);
   var response_fullfiled = await response.json();
-  console.log(response_fullfiled);
   urlArray = urlArray.concat(response_fullfiled);
   const imagesArray = await getImagesArray(urlArray);
-  //console.log(imagesArray.length);
-  //console.log(imagesArray);
+  console.log(imagesArray.length);
+  console.log(imagesArray);
   //Start the repetitions
   for (let rep = 1; rep < imagesArray.length + 1; rep++) {
     if (rep == 8) {
