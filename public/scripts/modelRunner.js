@@ -123,7 +123,7 @@ async function runBenchmark(
   //Saving documents to json file to be proccesed
   await postJSON(timesJson, "http://localhost:3001/times");
   console.log("Json Times: ", timesJson);
-  await onDownload(timesJson, modelName + "-" + "wasm-browser" + ".json");
+  //await onDownload(timesJson, modelName + "-" + "wasm-browser" + ".json");
   console.log("Download ready");
   //   onDownload(timesJsonAvg, "avg-" + modelName + "-" + backend + ".json");
 }
