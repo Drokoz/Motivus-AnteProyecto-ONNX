@@ -98,7 +98,12 @@ async function runBenchmark(
   //Create arrays than will have the json
   var timesJson = [];
   var timesJsonAvg = [];
-  const urlsArray = await (await fetch("http://localhost:3001/getUrls")).json();
+  console.log("Obteniendo arreglo");
+  var response = await fetch("http://localhost:3001/urlArray");
+  console.log(response);
+  var response_fullfiled = await response.json();
+  console.log(response_fullfiled);
+  urlArray = urlArray.concat(response_fullfiled);
   const imagesArray = await getImagesArray(urlsArray);
   //console.log(imagesArray.length);
   //console.log(imagesArray);
@@ -115,7 +120,7 @@ async function runBenchmark(
     timesJson[rep - 1] = await runBatchModel(
       imageSize,
       arrayExpected,
-      urlArray,
+      imagesArray,
       urlArray,
       modelName
     );
