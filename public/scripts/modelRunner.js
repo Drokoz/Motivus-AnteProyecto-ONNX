@@ -43,16 +43,17 @@ async function runBatchModel(
     var response_fullfiled = await response.json();
     console.log(response_fullfiled);
     urlArray = urlArray.concat(response_fullfiled);
+    console.log("Arreglo obtenido: ");
+    console.log(JSON.stringify(urlArray));
   }
-  console.log("Arreglo obtenido: ");
-  console.log(JSON.stringify(urlArray));
+
   let times = {};
   var startTime = performance.now();
   var timeImageArray = performance.now();
   var imageArray = imagesArray;
 
-  console.log("Obteniendo imagenes");
-  if (imagesArray.length === 0) {
+  if (imageArray.length === 0) {
+    console.log("Obteniendo imagenes");
     imageArray = await getImagesArray(urlArray);
   }
   var FTimeImageArray = performance.now() - timeImageArray;
@@ -111,15 +112,16 @@ async function runBenchmark(
     if (rep == 8) {
       break;
     }
-    let urlArray = imagesArray.slice(0, rep);
-    console.log("Testing with: ", urlArray.length, " images");
+    let urlArray = urlsArray;
+    let imageArray = imagesArray.slice(0, rep);
+    console.log("Testing with: ", imageArray.length, " images");
 
-    //console.log(urlArray);
+    console.log(imageArray);
     //create json for each repetition
     timesJson[rep - 1] = await runBatchModel(
       imageSize,
       arrayExpected,
-      imagesArray,
+      imageArray,
       urlArray,
       modelName
     );
@@ -174,7 +176,7 @@ async function getImagesArray(urls) {
       imgArray.push(image);
     }
   }
-  console.log(imgArray);
+  //console.log(imgArray);
 
   return imgArray;
 }
