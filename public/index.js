@@ -6,6 +6,8 @@ async function runModel() {
   const imageSize = 224;
   const arrayExpected = [1, 3, imageSize, imageSize];
   const imagesArray = [];
+  const urlsArray = [];
+  const urlArray = [];
 
   console.log("Loading...");
   await loadModel();
@@ -19,7 +21,7 @@ async function runModel() {
         imageSize,
         arrayExpected,
         imagesArray,
-        [],
+        urlsArray,
         modelName
       );
       break;
@@ -29,7 +31,7 @@ async function runModel() {
         imageSize,
         arrayExpected,
         imagesArray,
-        [],
+        urlArray,
         modelName
       );
       break;

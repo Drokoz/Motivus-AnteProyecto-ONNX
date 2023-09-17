@@ -89,8 +89,8 @@ async function runBatchModel(
 async function runBenchmark(
   imageSize,
   arrayExpected,
-  url,
-  urlArray,
+  imagesArray,
+  urlsArray,
   modelName
 ) {
   //console.log(width, height);
@@ -101,8 +101,9 @@ async function runBenchmark(
   console.log("Obteniendo arreglo benchmark");
   var response = await fetch("http://localhost:3001/urlArray");
   var response_fullfiled = await response.json();
-  urlArray = urlArray.concat(response_fullfiled);
-  const imagesArray = await getImagesArray(urlArray);
+  urlsArray = urlsArray.concat(response_fullfiled);
+  console.log(urlsArray);
+  const imagesArray = await getImagesArray(urlsArray);
   console.log(imagesArray.length);
   console.log(imagesArray);
   //Start the repetitions
