@@ -31,42 +31,31 @@ async function getTensorFromImage(imageSize, arrayExpected, modelName) {
   return inputTensor;
 }
 
-//Get tensor from an imgArray
-async function getTensorFromBatch(
-  imageSize,
-  imgArray,
-  arrayExpected,
-  modelName
-) {
-  k = 0;
-  //console.log(imgArray);
+async function getTensorFromBatch(imageSize, imgArray, arrayExpected, modelName) {
   const countImages = imgArray.length;
   arrayExpected[0] = countImages;
-  //console.log(imageSize);
+
   const processArray = ndarray(
     new Float32Array(countImages * imageSize * imageSize * 3),
     arrayExpected
   );
-  for (let i = 0; i < countImages; i++) {
-    const element = imgArray[i];
-    //console.log(modelName);
-    const preprocessedData = await preprocess[modelName](
-      imageSize,
-      imageSize,
-      element
-    );
+
+  // Parallel processing
+  const preprocessedDataArray = await Promise.all(
+    imgArray.map((element) => preprocess[modelName](imageSize, imageSize, element))
+  );
+
+  preprocessedDataArray.forEach((preprocessedData, k) => {
     ndarray.ops.assign(
       processArray.pick(k, null, null, null),
       preprocessedData
     );
-    k = k + 1;
-  }
-  //   console.log(processArray);
-  //   console.log(arrayExpected);
-  const inputTensor = new ort.Tensor(processArray.data, arrayExpected);
+  });
 
+  const inputTensor = new ort.Tensor(processArray.data, arrayExpected);
   return inputTensor;
 }
+
 //Case manegment to call diferent preprocess steps
 const preprocess = {
   //Preprocess raw image data to match YoloV4 requirement.
