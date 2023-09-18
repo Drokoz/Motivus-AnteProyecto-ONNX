@@ -109,7 +109,7 @@ async function runBenchmark(
   console.log(imagesArray);
   //Start the repetitions
   for (let rep = 1; rep < imagesArray.length + 1; rep++) {
-    if (rep == 7) {
+    if (rep == 8) {
       break;
     }
     let urlArray = urlsArray;
