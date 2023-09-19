@@ -136,45 +136,9 @@ async function runBenchmark(
 //Obtains an array of images connecting to an url
 async function getImagesArray(urls) {
   let imgArray = [];
-  if (urls[0].includes("localhost")) {
-    fetch(urls[0], {
-      method: "GET"
-    })
-      .then((response) => response.json())
-      .then((imagesList) => {
-        imagesList.forEach((filename) => {
-          fetch(`${url}/${filename}`)
-            .then((response) => response.blob())
-            .then((imageBlob) => {
-              // Create a new Image object
-              var image = new Image();
-
-              // Set the src property to the URL created from the blob using createObjectURL()
-              image.src = URL.createObjectURL(imageBlob);
-
-              // Once the image has loaded, you can display it on the page
-              image.onload = function () {
-                // Add the image to the DOM
-                image.width = this.width;
-                image.height = this.height;
-                //document.body.appendChild(image);
-                imgArray.push(image);
-              };
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    //Using a link/links to get images
-  } else {
-    for (const url of urls) {
-      const image = await fetchUrl(url);
-      imgArray.push(image);
-    }
+  for (const url of urls) {
+    const image = await fetchUrl(url);
+    imgArray.push(image);
   }
   //console.log(imgArray);
 
