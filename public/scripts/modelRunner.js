@@ -95,43 +95,43 @@ async function runBenchmark(
   modelName
 ) {
   //console.log(width, height);
+  for (let i = 1; i < 11; i++) {
 
-  //Create arrays than will have the json
-  var timesJson = [];
-  var timesJsonAvg = [];
-  console.log("Obteniendo arreglo benchmark");
-  var response = await fetch("http://localhost:3001/urlArray");
-  var response_fullfiled = await response.json();
-  urlsArray = urlsArray.concat(response_fullfiled);
-  console.log(urlsArray);
-  imagesArray = await getImagesArray(urlsArray);
-  console.log(imagesArray.length);
-  console.log(imagesArray);
-  //Start the repetitions
-  for (let rep = 1; rep < imagesArray.length + 1; rep++) {
-    if (rep == 7) {
-      break;
+    //Create arrays than will have the json
+    var timesJson = [];
+    var timesJsonAvg = [];
+    console.log("Obteniendo arreglo benchmark");
+    var response = await fetch("http://localhost:3001/urlArray");
+    var response_fullfiled = await response.json();
+    urlsArray = urlsArray.concat(response_fullfiled);
+    console.log(urlsArray);
+    imagesArray = await getImagesArray(urlsArray);
+    console.log(imagesArray.length);
+    console.log(imagesArray);
+    //Start the repetitions
+    for (let rep = 1; rep < imagesArray.length + 1; rep++) {
+      if (rep == 7) {
+        break;
+      }
+      let urlArray = urlsArray;
+      let imageArray = imagesArray.slice(0, rep);
+      console.log("Testing with: ", imageArray.length, " images");
+
+      console.log(imageArray);
+      //create json for each repetition
+      timesJson[rep - 1] = await runBatchModel(
+        imageSize,
+        arrayExpected,
+        imageArray,
+        urlArray,
+        modelName
+      );
     }
-    let urlArray = urlsArray;
-    let imageArray = imagesArray.slice(0, rep);
-    console.log("Testing with: ", imageArray.length, " images");
-
-    console.log(imageArray);
-    //create json for each repetition
-    timesJson[rep - 1] = await runBatchModel(
-      imageSize,
-      arrayExpected,
-      imageArray,
-      urlArray,
-      modelName
-    );
+    //Saving documents to json file to be proccesed
+    //await postJSON(timesJson, "http://localhost:3001/times");
+    //console.log("Json Times: ", timesJson);
+    fs.writeFileSync("./times/resnet-wasm-docker" + rep.toString() +".json", JSON.stringify(resT));
   }
-  //Saving documents to json file to be proccesed
-  await postJSON(timesJson, "http://localhost:3001/times");
-  console.log("Json Times: ", timesJson);
-  //await onDownload(timesJson, modelName + "-" + "wasm-browser" + ".json");
-  console.log("Download ready");
-  //   onDownload(timesJsonAvg, "avg-" + modelName + "-" + backend + ".json");
 }
 //Obtains an array of images connecting to an url
 async function getImagesArray(urls) {
