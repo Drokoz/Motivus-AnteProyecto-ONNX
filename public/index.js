@@ -2,7 +2,7 @@
 async function runModel() {
   //Getting options selected
   var modelName = "resnet";
-  var modeName = "benchmark";
+  var modeName = "batch";
   const imageSize = 224;
   const arrayExpected = [1, 3, imageSize, imageSize];
   const imagesArray = [];
