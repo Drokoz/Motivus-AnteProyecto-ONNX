@@ -8,9 +8,20 @@ async function runModel() {
   const imagesArray = [];
   const urlsArray = [];
   const urlArray = [];
+  const warm = false;
 
   console.log("Loading...");
   await loadModel();
+
+  console.log("warming up...");
+  await await runBatchModel(
+    imageSize,
+    arrayExpected,
+    imagesArray,
+    ["https://picsum.photos/id/0/5000/3333"],
+    modelName,
+    true
+  );
 
   var result;
   console.log("Entering mode: ", modeName);
@@ -32,7 +43,8 @@ async function runModel() {
         arrayExpected,
         imagesArray,
         urlArray,
-        modelName
+        modelName,
+        warm
       );
       break;
     default:

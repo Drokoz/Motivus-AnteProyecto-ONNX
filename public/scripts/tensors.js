@@ -40,7 +40,7 @@ async function getTensorFromBatch(imageSize, imgArray, arrayExpected, modelName)
     arrayExpected
   );
 
-  // Parallel processing
+  // processing
   const preprocessedDataArray = await Promise.all(
     imgArray.map((element) => preprocess[modelName](imageSize, imageSize, element))
   );
@@ -116,24 +116,49 @@ const preprocess = {
   resnet: async function preprocessResnet(width, height, img) {
     //console.log(img);
     await sleep(0.1);
-    //console.log(img.height);
-    let mat = cv.imread(img);
+    // //console.log(img.height);
+    // let mat = cv.imread(img);
 
-    //Resize
-    let image_resized = new cv.Mat();
-    let dsize = new cv.Size(width, height);
-    cv.resize(mat, image_resized, dsize, 0, 0, cv.INTER_LINEAR);
+    // //Resize
+    // let image_resized = new cv.Mat();
+    // let dsize = new cv.Size(width, height);
+    // cv.resize(mat, image_resized, dsize, 0, 0, cv.INTER_LINEAR);
 
-    //console.log("checking");
-    //Create array from images and processed data
-    const arrayExpected = [height, width, 4];
+    // //console.log("checking");
+    // //Create array from images and processed data
+    // const arrayExpected = [height, width, 4];
+
+    //Check apart
+    // Create a canvas and get the context
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+
+    // Draw the original image onto the canvas
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    // Resize the canvas to the target dimensions
+    const resizedCanvas = document.createElement('canvas');
+    resizedCanvas.width = width;
+    resizedCanvas.height = height;
+    const resizedCtx = resizedCanvas.getContext('2d');
+    resizedCtx.drawImage(canvas, 0, 0, width, height);
+  
+      // Get the resized image data
+      const imgData = resizedCtx.getImageData(0, 0, width, height);
+  
+      // Create ndarray from resized image data
+      const arrayExpected = [height, width, 4];
+      const dataFromImage = ndarray(new Float32Array(imgData.data), arrayExpected);
+  
 
     const arrayExpected2 = [3, height, width];
 
-    const dataFromImage = ndarray(
-      new Float32Array(image_resized.data),
-      arrayExpected
-    );
+    // const dataFromImage = ndarray(
+    //   new Float32Array(image_resized.data),
+    //   arrayExpected
+    // );
     const dataProcessed = ndarray(
       new Float32Array(width * height * 3),
       arrayExpected2
